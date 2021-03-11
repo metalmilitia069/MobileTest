@@ -28,7 +28,7 @@ public class PlayerAnimation : MonoBehaviour
     public void JumpAnimation(bool isJumping)
     {
         _anim.SetBool("Jumping", isJumping);
-        Debug.Log("Jumping? " + isJumping);
+        //Debug.Log("Jumping? " + isJumping);
     }
 
     public void AttackAnimation()

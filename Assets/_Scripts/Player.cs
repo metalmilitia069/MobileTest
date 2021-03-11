@@ -15,14 +15,17 @@ public class Player : MonoBehaviour
     private LayerMask GroundLayer;
 
     private PlayerAnimation _playerAnimation;
-    private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _playerSpriteRenderer;
+    private SpriteRenderer _swordArcSpriteRenderer;
+
 
     // Start is called before the first frame update
     void Start()
     {
         _rigid = GetComponent<Rigidbody2D>();
         _playerAnimation = GetComponent<PlayerAnimation>();
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _swordArcSpriteRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -66,11 +69,23 @@ public class Player : MonoBehaviour
     {
         if (horizontalInput > 0)
         {
-            _spriteRenderer.flipX = false;
+            _playerSpriteRenderer.flipX = false;
+            _swordArcSpriteRenderer.flipX = false;
+            _swordArcSpriteRenderer.flipY = false;
+
+            Vector3 newPos = _swordArcSpriteRenderer.transform.localPosition;
+            newPos.x = Mathf.Abs(newPos.x);
+            _swordArcSpriteRenderer.transform.localPosition = newPos;
         }
         else if (horizontalInput < 0)
         {
-            _spriteRenderer.flipX = true;
+            _playerSpriteRenderer.flipX = true;
+            _swordArcSpriteRenderer.flipX = true;
+            _swordArcSpriteRenderer.flipY = true;
+            Vector3 newPos = _swordArcSpriteRenderer.transform.localPosition;
+            //_ = (newPos.x < 0) ? newPos.x : (newPos.x = (newPos.x * -1));
+            newPos.x = (newPos.x < 0) ? newPos.x : newPos.x * -1;
+            _swordArcSpriteRenderer.transform.localPosition = newPos;            
         }
     }
 }
