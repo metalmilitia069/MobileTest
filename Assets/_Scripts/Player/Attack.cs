@@ -4,11 +4,27 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
+    private bool _canDamage = true;
+    private int _weaponDamage = 1;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponentInChildren<Enemy>())
+        IDamageable hitItem = collision.GetComponent<IDamageable>();
+
+      
+        if (hitItem != null)
         {
-            Debug.Log("mozo");
+            if (_canDamage == true)
+            {
+                hitItem.Damage(_weaponDamage);
+                _canDamage = false;                
+                StartCoroutine(ResetDamage());
+            }
         }
+    }
+
+    IEnumerator ResetDamage()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _canDamage = true;
     }
 }
