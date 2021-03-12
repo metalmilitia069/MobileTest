@@ -17,6 +17,10 @@ public abstract class Enemy : MonoBehaviour
     protected Animator _monsterAnimator;
     protected SpriteRenderer _monsterSprite;
 
+    protected bool isHit = false;
+
+    protected Player player;
+
     private void Start()
     {
         Init();
@@ -26,15 +30,11 @@ public abstract class Enemy : MonoBehaviour
     {
         _monsterAnimator = GetComponentInChildren<Animator>();
         _monsterSprite = GetComponentInChildren<SpriteRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     public virtual void Movement()
-    {
-        
-
-        //
-
-
+    {     
         if (transform.position == pointA.position)
         {
             _currentTarget = PointB.position;
@@ -46,12 +46,36 @@ public abstract class Enemy : MonoBehaviour
             _monsterAnimator.SetTrigger("Idle");
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, _currentTarget, speed * Time.deltaTime);
+        if (!isHit)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _currentTarget, speed * Time.deltaTime);
+        }
+
+        float distance = Vector3.Distance(transform.localPosition, player.transform.localPosition);
+
+        if (distance > 2.0f)
+        {
+            isHit = false;
+            _monsterAnimator.SetBool("InCombat", false);
+        }
+
+        Vector3 direction = player.transform.localPosition - this.transform.localPosition;
+        if (_monsterAnimator.GetBool("InCombat"))
+        {
+            if (direction.x < 0)
+            {
+                _monsterSprite.flipX = true;
+            }
+            else if (direction.x > 0)
+            {
+                _monsterSprite.flipX = false;
+            }
+        }
     }
 
     public virtual void Update()
     {
-        if (_monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("MossGiant_Ene_Idle") || _monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Spider_Ene_Idle") || _monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Skeleton_Ene_Idle"))
+        if (_monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("MossGiant_Ene_Idle") || _monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Spider_Ene_Idle") || _monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Skeleton_Ene_Idle") && !_monsterAnimator.GetBool("InCombat"))
         {
             return;
         }

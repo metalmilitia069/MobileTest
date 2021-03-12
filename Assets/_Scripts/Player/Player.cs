@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     private Rigidbody2D _rigid;
     [SerializeField]
-    private float _jumpForce = 5.0f;
+    private float _jumpForce = 5.5f;
     [SerializeField]
     private bool _grounded = false; //DELETE LATER
     [SerializeField]
     private float _speed = 5.0f;
     [SerializeField]
     private LayerMask GroundLayer;
+    [SerializeField]
+    private int _playerHealth = 3;
 
     private PlayerAnimation _playerAnimation;
     private SpriteRenderer _playerSpriteRenderer;
     private SpriteRenderer _swordArcSpriteRenderer;
+
+    public int Health { get; set; }
 
 
     // Start is called before the first frame update
@@ -26,6 +30,7 @@ public class Player : MonoBehaviour
         _playerAnimation = GetComponent<PlayerAnimation>();
         _playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _swordArcSpriteRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        Health = _playerHealth;
     }
 
     // Update is called once per frame
@@ -37,8 +42,6 @@ public class Player : MonoBehaviour
         {
             _playerAnimation.AttackAnimation();
         }
-
-
     }
 
     private void Movement()
@@ -86,6 +89,19 @@ public class Player : MonoBehaviour
             //_ = (newPos.x < 0) ? newPos.x : (newPos.x = (newPos.x * -1));
             newPos.x = (newPos.x < 0) ? newPos.x : newPos.x * -1;
             _swordArcSpriteRenderer.transform.localPosition = newPos;            
+        }
+    }
+
+    public void Damage(int damageAmount)
+    {
+        Health -= damageAmount;
+        //_monsterAnimator.SetTrigger("Hit");
+        //isHit = true;
+        //_monsterAnimator.SetBool("InCombat", true);
+
+        if (Health < 1)
+        {
+            Destroy(this.gameObject);
         }
     }
 }

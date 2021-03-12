@@ -17,6 +17,8 @@ public class SkeletonEnemy : Enemy, IDamageable
     {
         Health -= damageAmount;
         _monsterAnimator.SetTrigger("Hit");
+        isHit = true;
+        _monsterAnimator.SetBool("InCombat", true);
 
         if (Health < 1)
         {

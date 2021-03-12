@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
 {
 
     private bool _canDamage = true;
+    [SerializeField]
     private int _weaponDamage = 1;    
 
     public void DamageHandle(IDamageable damageable)
