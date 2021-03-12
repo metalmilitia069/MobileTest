@@ -14,7 +14,15 @@ public class MossGiantEnemy : Enemy, IDamageable
 
     public void Damage(int damageAmount)
     {
-        
+        Health -= damageAmount;
+        _monsterAnimator.SetTrigger("Hit");
+        isHit = true;
+        _monsterAnimator.SetBool("InCombat", true);
+
+        if (Health < 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 

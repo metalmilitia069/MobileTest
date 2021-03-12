@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    private bool _canDamage = true;
-    private int _weaponDamage = 1;
+    //private bool _canDamage = true;
+    //private int _weaponDamage = 1;
     [SerializeField]
     private GameObject _weaponObject;
 
@@ -28,9 +28,9 @@ public class Attack : MonoBehaviour
         }
     }
 
-    IEnumerator ResetDamage()
-    {
-        yield return new WaitForSeconds(0.5f);
-        _canDamage = true;
-    }
+    //IEnumerator ResetDamage()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    _canDamage = true;
+    //}
 }

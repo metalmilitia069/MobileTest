@@ -17,6 +17,11 @@ public class SpiderEnemy : Enemy, IDamageable
         
     }
 
+    public override void Movement()
+    {
+        //base.Movement();
+    }
+
 
 
 

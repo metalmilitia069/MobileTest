@@ -8,8 +8,7 @@ public class SkeletonEnemy : Enemy, IDamageable
     public override void Init()
     {
         base.Init();
-        Health = base.health;
-        
+        Health = base.health;        
     }
     public int Health { get; set; }
 
