@@ -51,7 +51,7 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Update()
     {
-        if (_monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("MossGiant_Ene_Idle") || _monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Spider_Ene_Idle"))
+        if (_monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("MossGiant_Ene_Idle") || _monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Spider_Ene_Idle") || _monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Skeleton_Ene_Idle"))
         {
             return;
         }
