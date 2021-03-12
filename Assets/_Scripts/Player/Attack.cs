@@ -6,6 +6,9 @@ public class Attack : MonoBehaviour
 {
     private bool _canDamage = true;
     private int _weaponDamage = 1;
+    [SerializeField]
+    private GameObject _weaponObject;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         IDamageable hitItem = collision.GetComponent<IDamageable>();
@@ -13,12 +16,15 @@ public class Attack : MonoBehaviour
       
         if (hitItem != null)
         {
-            if (_canDamage == true)
-            {
-                hitItem.Damage(_weaponDamage);
-                _canDamage = false;                
-                StartCoroutine(ResetDamage());
-            }
+            _weaponObject.GetComponent<Weapon>().DamageHandle(hitItem);
+            //if (_canDamage == true)
+            //{
+                //hitItem.Damage(_weaponDamage);
+                //this.gameObject.SetActive(false);
+                //Debug.Log("CU");
+                //StartCoroutine(ResetDamage());
+                //_canDamage = false;                
+            //}
         }
     }
 
