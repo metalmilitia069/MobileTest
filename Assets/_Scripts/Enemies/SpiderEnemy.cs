@@ -23,7 +23,9 @@ public class SpiderEnemy : Enemy, IDamageable
 
         if (Health < 1)
         {
-            Destroy(this.gameObject);
+            isDead = true;
+            _monsterAnimator.SetTrigger("Death");
+            Destroy(this.gameObject, 5.0f);
         }
     }
 

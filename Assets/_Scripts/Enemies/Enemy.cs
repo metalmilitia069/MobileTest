@@ -21,6 +21,8 @@ public abstract class Enemy : MonoBehaviour
 
     protected Player player;
 
+    protected bool isDead = false;
+
     private void Start()
     {
         Init();
@@ -77,6 +79,11 @@ public abstract class Enemy : MonoBehaviour
     {
         string mozo = "MossGiant_Ene_Idle";
         if (_monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName(mozo) || _monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Spider_Ene_Idle") || _monsterAnimator.GetCurrentAnimatorStateInfo(0).IsName("Skeleton_Ene_Idle") && !_monsterAnimator.GetBool("InCombat"))
+        {
+            return;
+        }
+
+        if (isDead)
         {
             return;
         }

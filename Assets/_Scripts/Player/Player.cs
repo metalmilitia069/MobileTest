@@ -101,7 +101,8 @@ public class Player : MonoBehaviour, IDamageable
 
         if (Health < 1)
         {
-            Destroy(this.gameObject);
+            this.GetComponentInChildren<Animator>().SetTrigger("Death");
+            //Destroy(this.gameObject);
         }
     }
 }
