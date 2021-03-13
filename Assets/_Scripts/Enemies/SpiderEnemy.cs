@@ -5,6 +5,8 @@ using UnityEngine;
 public class SpiderEnemy : Enemy, IDamageable
 {
 
+    public GameObject acidEffectPrefab;
+
     public override void Init()
     {
         base.Init();
@@ -14,12 +16,25 @@ public class SpiderEnemy : Enemy, IDamageable
 
     public void Damage(int damageAmount)
     {
-        
+        Health -= damageAmount;
+        _monsterAnimator.SetTrigger("Hit");
+        isHit = true;
+        _monsterAnimator.SetBool("InCombat", true);
+
+        if (Health < 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public override void Movement()
     {
         //base.Movement();
+    }
+
+    public void Attack()
+    {
+        Instantiate(acidEffectPrefab, transform.position, Quaternion.identity);
     }
 
 
