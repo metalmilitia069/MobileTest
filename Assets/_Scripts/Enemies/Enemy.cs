@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+
+    [SerializeField]
+    public GameObject diamondPrefab;
     [SerializeField]
     protected int health;
     [SerializeField]

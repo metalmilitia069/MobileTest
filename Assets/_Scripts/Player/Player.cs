@@ -20,7 +20,11 @@ public class Player : MonoBehaviour, IDamageable
     private SpriteRenderer _playerSpriteRenderer;
     private SpriteRenderer _swordArcSpriteRenderer;
 
+    public int diamonds = 0;
+
     public int Health { get; set; }
+
+
 
 
     // Start is called before the first frame update

@@ -14,6 +14,11 @@ public class SkeletonEnemy : Enemy, IDamageable
 
     public void Damage(int damageAmount)
     {
+        if (isDead)
+        {
+            return;
+        }
+
         Health -= damageAmount;
         _monsterAnimator.SetTrigger("Hit");
         isHit = true;
@@ -23,6 +28,7 @@ public class SkeletonEnemy : Enemy, IDamageable
         {
             isDead = true;
             _monsterAnimator.SetTrigger("Death");
+            GameObject diamond = Instantiate(diamondPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject, 5.0f);
         }
     }
