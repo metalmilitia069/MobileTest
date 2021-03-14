@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField]
     private LayerMask GroundLayer;
     [SerializeField]
-    private int _playerHealth = 3;
+    private int _playerHealth = 4;
 
     private PlayerAnimation _playerAnimation;
     private SpriteRenderer _playerSpriteRenderer;
@@ -98,15 +98,29 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Damage(int damageAmount)
     {
+        if (Health < 1)
+        {
+            return;
+        }
+
         Health -= damageAmount;
+        UIManager.Instance.UpdateLives(Health);
+        Debug.Log("Healh = " + Health);
         //_monsterAnimator.SetTrigger("Hit");
         //isHit = true;
         //_monsterAnimator.SetBool("InCombat", true);
 
         if (Health < 1)
         {
-            this.GetComponentInChildren<Animator>().SetTrigger("Death");
+            //this.GetComponentInChildren<Animator>().SetTrigger("Death");
+            _playerAnimation.Death();
             //Destroy(this.gameObject);
         }
+    }
+
+    public void AddGems(int amount)
+    {
+        diamonds += amount;
+        UIManager.Instance.UpdateGemCount(diamonds);
     }
 }

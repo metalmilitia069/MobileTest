@@ -36,4 +36,9 @@ public class PlayerAnimation : MonoBehaviour
         _anim.SetTrigger("BasicAttack");
         _swordArc.SetTrigger("SwordAnimation");
     }
+
+    public void Death()
+    {
+        _anim.SetTrigger("Death");
+    }
 }

@@ -11,7 +11,10 @@ public class Diamond : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            collision.GetComponent<Player>().diamonds += gems;
+
+            Player player = collision.GetComponent<Player>();
+            //player.diamonds += gems;
+            player.AddGems(gems);
             Destroy(this.gameObject);
         }
     }
