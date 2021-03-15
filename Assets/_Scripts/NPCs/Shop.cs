@@ -50,7 +50,7 @@ public class Shop : MonoBehaviour
             default:
                 break;
         }
-        Debug.Log("peidei");
+        //Debug.Log("peidei");
     }
 
     public void BuyItem()

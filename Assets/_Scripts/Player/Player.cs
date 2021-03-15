@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public int Health { get; set; }
 
-
+    private PlayerController _playerController;
 
 
     // Start is called before the first frame update
@@ -35,6 +35,9 @@ public class Player : MonoBehaviour, IDamageable
         _playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _swordArcSpriteRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
         Health = _playerHealth;
+        _playerController = GetComponent<PlayerController>();
+        _playerController.GetPlayerControls().Land.Jump.performed += _ => Jump();
+        _playerController.GetPlayerControls().Land.Attack.performed += _ => Attack();
     }
 
     // Update is called once per frame
@@ -42,7 +45,20 @@ public class Player : MonoBehaviour, IDamageable
     {
         Movement();
 
-        if (Input.GetMouseButtonDown(0) && _rigid.velocity.y == 0)
+        //if (Input.GetMouseButtonDown(0) && _rigid.velocity.y == 0) ///////////////////////////////////////////////////////////////
+        //{
+        //    _playerAnimation.AttackAnimation();
+        //}
+
+        if (_rigid.velocity.y == 0)
+        {
+            _playerAnimation.JumpAnimation(false);
+        }
+    }
+
+    public void Attack()
+    {
+        if (_rigid.velocity.y == 0)
         {
             _playerAnimation.AttackAnimation();
         }
@@ -50,25 +66,42 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Movement()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        FlipCharacter(horizontalInput);
+        //float horizontalInput = Input.GetAxisRaw("Horizontal"); //////////////////////////////////////////////////////////////////////////////
+        //FlipCharacter(horizontalInput);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        //if (Input.GetKeyDown(KeyCode.Space)) ////////////////////////////////////////////////////////////////////////////////////////////
+        //{
+        //    RaycastHit2D hitInfo = Physics2D.Raycast(this.transform.position, Vector2.down, 0.6f, GroundLayer);
+
+        //    if (hitInfo.collider)
+        //    {
+        //        _rigid.velocity = new Vector2(_rigid.velocity.x, _jumpForce);
+        //        _playerAnimation.JumpAnimation(true);
+        //    }
+        //}
+
+        //_rigid.velocity = new Vector2(horizontalInput * _speed, _rigid.velocity.y);
+        //_playerAnimation.Move(horizontalInput);
+        //if (_rigid.velocity.y == 0)
+        //{
+        //    _playerAnimation.JumpAnimation(false);            
+        //}
+
+        FlipCharacter(_playerController.movementInput);
+
+        _rigid.velocity = new Vector2(_playerController.movementInput * _speed, _rigid.velocity.y);
+        _playerAnimation.Move(_playerController.movementInput);
+
+    }
+
+    public void Jump()
+    {
+        RaycastHit2D hitInfo = Physics2D.Raycast(this.transform.position, Vector2.down, 0.6f, GroundLayer);
+
+        if (hitInfo.collider)
         {
-            RaycastHit2D hitInfo = Physics2D.Raycast(this.transform.position, Vector2.down, 0.6f, GroundLayer);
-
-            if (hitInfo.collider)
-            {
-                _rigid.velocity = new Vector2(_rigid.velocity.x, _jumpForce);
-                _playerAnimation.JumpAnimation(true);
-            }
-        }
-
-        _rigid.velocity = new Vector2(horizontalInput * _speed, _rigid.velocity.y);
-        _playerAnimation.Move(horizontalInput);
-        if (_rigid.velocity.y == 0)
-        {
-            _playerAnimation.JumpAnimation(false);            
+            _rigid.velocity = new Vector2(_rigid.velocity.x, _jumpForce);
+            _playerAnimation.JumpAnimation(true);
         }
     }
 

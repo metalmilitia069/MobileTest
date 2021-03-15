@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
         if (_canDamage == true)
         {
             damageable.Damage(_weaponDamage);            
-            Debug.Log("HIT");
+            //Debug.Log("HIT");
             _canDamage = false;
             StartCoroutine(ResetDamage());
         }
